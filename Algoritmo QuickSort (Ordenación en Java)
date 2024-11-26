@@ -1,0 +1,49 @@
+import java.util.Arrays;
+
+public class QuickSort {
+
+    // Función para ordenar un array usando el algoritmo QuickSort
+    public static void quickSort(int[] arr, int inicio, int fin) {
+        if (inicio < fin) {
+            // Encontrar el pivote
+            int pivote = partition(arr, inicio, fin);
+
+            // Ordenar las particiones recursivamente
+            quickSort(arr, inicio, pivote - 1);
+            quickSort(arr, pivote + 1, fin);
+        }
+    }
+
+    // Función que divide el array en particiones
+    private static int partition(int[] arr, int inicio, int fin) {
+        int pivote = arr[fin];
+        int i = (inicio - 1);
+
+        // Coloca todos los elementos menores que el pivote a la izquierda
+        // y los elementos mayores a la derecha
+        for (int j = inicio; j < fin; j++) {
+            if (arr[j] <= pivote) {
+                i++;
+                // Intercambiar arr[i] y arr[j]
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        // Colocar el pivote en su posición final
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[fin];
+        arr[fin] = temp;
+
+        return i + 1;
+    }
+
+    // Función principal para probar el algoritmo
+    public static void main(String[] args) {
+        int[] arr = { 29, 10, 14, 37, 13, 35 };
+        System.out.println("Array antes de ordenar: " + Arrays.toString(arr));
+        quickSort(arr, 0, arr.length - 1);
+        System.out.println("Array después de ordenar: " + Arrays.toString(arr));
+    }
+}
