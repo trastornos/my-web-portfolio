@@ -1,0 +1,17 @@
+InfoBegin
+InfoKey: Creator
+InfoValue: Writer
+InfoBegin
+InfoKey: CreationDate
+InfoValue: D:20241019215634-07&apos;00&apos;
+InfoBegin
+InfoKey: Producer
+InfoValue: LibreOffice 7.3
+PdfID0: d7ad8c73afcbebe3fc87922311ad2f89
+PdfID1: d7ad8c73afcbebe3fc87922311ad2f89
+NumberOfPages: 1
+PageMediaBegin
+PageMediaNumber: 1
+PageMediaRotation: 0
+PageMediaRect: 0 0 612 792
+PageMediaDimensions: 612 792
