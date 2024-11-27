@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App de Tareas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Mi lista de tareas</h1>
+        <input type="text" id="taskTitle" placeholder="Nuevo título de tarea">
+        <textarea id="taskDescription" placeholder="Descripción (opcional)"></textarea>
+        <button id="addTask">Agregar tarea</button>
+
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cargar las tareas
+            const taskList = document.getElementById('taskList');
+            const taskTitle = document.getElementById('taskTitle');
+            const taskDescription = document.getElementById('taskDescription');
+            const addTaskButton = document.getElementById('addTask');
+
+            const fetchTasks = async () => {
+                const res = await fetch('/api/tasks');
+                const tasks = await res.json();
+                taskList.innerHTML = '';
+                tasks.forEach(task => {
+                    const li = document.createElement('li');
+                    li.textContent = `${task.title}: ${task.description || 'No description'}`;
+                    li.addEventListener('click', () => deleteTask(task._id));
+                    taskList.appendChild(li);
+                });
+            };
+
+            const addTask = async () => {
+                const task = {
+                    title: taskTitle.value,
+                    description: taskDescription.value
+                };
+                await fetch('/api/tasks', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(task)
+                });
+                taskTitle.value = '';
+                taskDescription.value = '';
+                fetchTasks();
+            };
+
+            const deleteTask = async (id) => {
+                await fetch(`/api/tasks/${id}`, {
+                    method: 'DELETE',
+                });
+                fetchTasks();
+            };
+
+            addTaskButton.addEventListener('click', addTask);
+            fetchTasks();
+        });
+    </script>
+</body>
+</html>
